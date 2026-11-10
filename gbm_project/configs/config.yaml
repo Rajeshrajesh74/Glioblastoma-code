@@ -1,0 +1,54 @@
+paths:
+  data_root: "D:/datasets/UCSD-PTGBM"          # folder that contains UCSD-PTGBM-0002_01, ... subfolders
+  scan_table: "outputs/scan_table.csv"
+  clinical_csv: "D:/datasets/UCSD-PTGBM/clinical.csv"   # patient-level clinical/molecular/survival file
+  visits_csv: null            # optional CSV with columns: patient_id, visit, days  (days since first scan)
+  seg_ckpt: "outputs/seg_best.pt"
+  feature_dir: "outputs/features"
+  out_dir: "outputs"
+
+data:
+  modalities: [flair, t1, t1c, t2]
+  spatial_size: [128, 128, 128]      # every dim must be divisible by 64 (e.g. 64 or 128)
+  # label values inside the ground-truth segmentation files (BraTS style).
+  # CHECK these against your files (print np.unique of one seg volume).
+  et_labels: [3, 4]
+  tc_labels: [1, 3, 4]
+  wt_labels: [1, 2, 3, 4]
+
+seg:
+  base_channels: 16
+  batch_size: 1
+  epochs: 100
+  lr: 0.0003
+  weight_decay: 0.00001
+  num_workers: 2
+  amp: true
+
+# Column names inside YOUR clinical CSV. Edit these. The script prints the available
+# columns if a name is wrong.
+clinical:
+  id_col: "Patient ID"
+  os_time_col: "OS_days"            # overall survival time
+  os_event_col: "OS_event"          # 1 = death observed, 0 = censored
+  progression_col: "Progression"    # 0/1 progression label
+  numeric_cols: ["Age"]
+  categorical_cols: ["Sex", "MGMT", "IDH"]
+
+longitudinal:
+  d_model: 128
+  gat_heads: 4
+  gat_layers: 2
+  temporal_heads: 4
+  temporal_layers: 2
+  dropout: 0.1
+  batch_size: 8
+  epochs: 150
+  lr: 0.0003
+  weight_decay: 0.0001
+  w_progression: 1.0
+  w_survival: 1.0
+  max_visits: null                  # e.g. 3 = only use the first 3 visits per patient
+  default_interval_days: 90         # used only when visits_csv is null
+
+seed: 42

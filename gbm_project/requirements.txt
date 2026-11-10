@@ -1,0 +1,11 @@
+torch>=2.3
+nibabel>=5.0
+numpy
+pandas
+scipy
+scikit-learn
+pyyaml
+tqdm
+# optional but needed for time-dependent AUC and Integrated Brier Score
+# (can be hard to install on Windows; everything else works without it)
+scikit-survival

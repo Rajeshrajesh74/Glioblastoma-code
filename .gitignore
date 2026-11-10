@@ -1,0 +1,38 @@
+
+# Virtual environment
+.venv/
+venv/
+
+# IDE
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Model checkpoints
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.onnx
+
+# Medical datasets
+*.nii
+*.nii.gz
+*.nrrd
+*.dcm
+
+# Training outputs
+gbm_project/outputs/
+runs/
+checkpoints/
+logs/
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+
+# Jupyter
+.ipynb_checkpoints/
